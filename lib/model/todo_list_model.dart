@@ -9,7 +9,7 @@ class TodoModel extends HiveObject {
   String title;
   @HiveField(2)
   final String description;
-// @HiveField(3)
-//   bool value;
-  TodoModel({required this.title, required this.description });
+@HiveField(3)
+  bool value ;
+  TodoModel({required this.title, required this.description,required this.value });
 }

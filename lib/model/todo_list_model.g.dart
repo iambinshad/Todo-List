@@ -19,19 +19,22 @@ class TodoModelAdapter extends TypeAdapter<TodoModel> {
     return TodoModel(
       title: fields[1] as String,
       description: fields[2] as String,
+      value: fields[3] as bool,
     )..id = fields[0] as int?;
   }
 
   @override
   void write(BinaryWriter writer, TodoModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.title)
       ..writeByte(2)
-      ..write(obj.description);
+      ..write(obj.description)
+      ..writeByte(3)
+      ..write(obj.value);
   }
 
   @override

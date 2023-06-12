@@ -18,18 +18,21 @@ class _TodoListScreenState extends State<TodoListScreen> {
 
   final descriptionController = TextEditingController();
 
-  late TodoModel checkbox;
+   TodoModel? checkbox;
   @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   openBox();
-  // }
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final todoProvider = Provider.of<TodoDBProvider>(context);
+    todoProvider.getAllTodoData();
+    checkbox!.value = false;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final todoProvider = Provider.of<TodoDBProvider>(context);
-    todoProvider.getAllTodoData();
+        final todoProvider = Provider.of<TodoDBProvider>(context);
+
+
     return Scaffold(
       floatingActionButton: CircleAvatar(
         child: IconButton(
@@ -68,15 +71,15 @@ class _TodoListScreenState extends State<TodoListScreen> {
                       data.description,
                       style: textStyle15,
                     ),
-                    // trailing: Checkbox(
-                    //   value: checkbox.value,
-                    //   onChanged: (bool? value) {
-                    //     setState(() {
-                    //       checkbox.value = value ?? false;
-                    //       checkbox.save();
-                    //     });
-                    //   },
-                    // ),
+                    trailing: Checkbox(
+                      value: checkbox!.value,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          checkbox!.value = value ?? false;
+                          checkbox!.save();
+                        });
+                      },
+                    ),
                   );
                 },
               ),
@@ -144,7 +147,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
     }
 
     final todoData =
-        TodoModel(title: title, description: description);
+        TodoModel(title: title, description: description,value:checkbox!.value);
     todoProvider.addTodoList(todoData);
     Navigator.pop(context);
   }
